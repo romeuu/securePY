@@ -7,9 +7,21 @@ def menu():
     select = int(input("Enter your choice: "))
     return select
 
+def addPassword(web, password):
+    try:
+        file = open('.passwords', "r+")
+        file.write("Website: "+web+" -> Password: "+password)
+        file.close()
+    except FileNotFoundError:
+        file = open('.passwords', 'w')
+        file.write("Website: "+web+" -> Password: "+password)
+        file.close()
+
 def checkOption(selection):
     if(selection == 1):
-        print("option 1")
+        website = input("Enter the website you want to save a password for: ")
+        password = input("Password that you want to save: ")
+        addPassword(website, password)
     elif(selection == 2):
         print("option 2")
     elif(selection == 3):
@@ -18,9 +30,7 @@ def checkOption(selection):
         print("option 4")
     elif(selection == 5):
         quit()
-
-
-
+    
 try:
     file = open(".masterpass", 'r+')
     masterpass = input("Please enter your masterpass: ")
