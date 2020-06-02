@@ -9,7 +9,7 @@ def menu():
 
 def addPassword(web, password):
     try:
-        file = open('.passwords', "r+")
+        file = open('.passwords', "a+")
         file.write(web+":"+password+"\n")
         file.close()
     except FileNotFoundError:
@@ -32,6 +32,21 @@ def modifyPassword(web, password):
     except FileNotFoundError:
         print("There are no passwords stored for you.")
 
+def deletePassword(web):
+    try:
+        a_file = open(".passwords", "r")
+        list_of_lines = a_file.readlines()
+        for n, i in enumerate(list_of_lines):
+            if web in i:
+                list_of_lines[n] = ""
+                
+        a_file = open(".passwords", "w")
+        a_file.writelines(list_of_lines)
+        a_file.close()
+
+    except FileNotFoundError:
+        print("There are no passwords stored for you.")
+
 def checkOption(selection):
     if(selection == 1):
         website = input("Enter the website you want to save a password for: ")
@@ -42,7 +57,8 @@ def checkOption(selection):
         password = input("Password that you want to edit: ")
         modifyPassword(website, password)
     elif(selection == 3):
-        print("option 3")
+        website = input("Enter the website you want to delete the password for: ")
+        deletePassword(website)
     elif(selection == 4):
         print("option 4")
     elif(selection == 5):
